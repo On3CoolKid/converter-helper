@@ -1,54 +1,51 @@
 <template>
-  <div id="timeConverter">
-    <el-container>
-      <el-header>
-        <h1>时间转换器</h1>
-      </el-header>
-      <el-main>
-        <el-input
-          v-model="time"
-          placeholder="输入时间数量"
-          type="number"
-        ></el-input>
-        <el-select v-model="fromUnit" placeholder="从单位">
-          <el-option label="秒" value="seconds"></el-option>
-          <el-option label="分钟" value="minutes"></el-option>
-          <el-option label="小时" value="hours"></el-option>
-          <el-option label="天" value="days"></el-option>
-          <el-option label="月" value="months"></el-option>
-          <el-option label="年" value="years"></el-option>
-        </el-select>
-        到
-        <el-select v-model="toUnit" placeholder="到单位">
-          <el-option label="秒" value="seconds"></el-option>
-          <el-option label="分钟" value="minutes"></el-option>
-          <el-option label="小时" value="hours"></el-option>
-          <el-option label="天" value="days"></el-option>
-          <el-option label="月" value="months"></el-option>
-          <el-option label="年" value="years"></el-option>
-        </el-select>
-        <el-button @click="convert">转换</el-button>
-        <el-button @click="clear">清除</el-button>
-        <!-- <el-result
-          :status="resultStatus"
-          :title="resultTitle"
-          :sub-title="resultSubtitle"
-        ></el-result> -->
-        <div v-if="resultStatus === 'success'" class="result-box">
-          <p>
-            <i class="fas fa-clock"></i> 
-            {{ resultTitle }}
-          </p>
-          <p>{{ resultSubtitle }}</p>
-        </div>
-      </el-main>
-    </el-container>
+  <div class="timeConverter">
+    <el-card shadow="hover">
+        <template #header>
+          <h2>时间转换器</h2>
+        </template>
+        <el-main>
+          <el-input
+            v-model="time"
+            placeholder="输入时间数量"
+            type="number"
+            style="width: 100%; margin-bottom: 10px"
+          ></el-input>
+          <el-select v-model="fromUnit" placeholder="从单位" style="width: 100%; margin-bottom: 10px">
+            <el-option label="秒" value="seconds"></el-option>
+            <el-option label="分钟" value="minutes"></el-option>
+            <el-option label="小时" value="hours"></el-option>
+            <el-option label="天" value="days"></el-option>
+            <el-option label="月" value="months"></el-option>
+            <el-option label="年" value="years"></el-option>
+          </el-select>
+          <div class="to">到</div>
+          <el-select v-model="toUnit" placeholder="到单位">
+            <el-option label="秒" value="seconds"></el-option>
+            <el-option label="分钟" value="minutes"></el-option>
+            <el-option label="小时" value="hours"></el-option>
+            <el-option label="天" value="days"></el-option>
+            <el-option label="月" value="months"></el-option>
+            <el-option label="年" value="years"></el-option>
+          </el-select>
+          <el-button @click="convert">转换</el-button>
+          <el-button @click="clear">清除</el-button>
+          <div v-if="resultStatus === 'success'" class="result-box">
+            <p>
+              <i class="fas fa-clock"></i>
+              {{ resultTitle }}
+            </p>
+            <p>{{ resultSubtitle }}</p>
+          </div>
+        </el-main>
+    </el-card>
   </div>
 </template>
 
 <script setup>
+// <script setup>是Vue 3中的新特性，用于定义组合式组件。
 import { ref } from "vue";
-import TimeConverter from "../utils/TimeConverter"; // 引入时间转换器
+import TimeConverter from "../utils/timeConverter.js"; // 引入时间转换器
 import { ElMessage } from "element-plus"; // 引入提示框
 
 // 定义时间数量的响应式变量
@@ -103,21 +100,51 @@ const clear = () => {
 
 
 <style scoped>
-body {
-  font-family: Arial, sans-serif;
-}
-
-#timeConverter {
-  max-width: 600px;
-  margin: 0 auto;
+.timeConverter {
   padding: 20px;
-  text-align: center;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: #2c3e50;
 }
 
-.el-button {
-  margin: 10px;
+.to{
+  margin-left: 5px;
+  margin-bottom: 10px;
 }
-/* .el-input, .el-select {
-  width: 200px;
-} */
+
+.el-card {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #409eff;
+}
+
+
+.el-input,
+.el-select {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+
+.result-box {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #409eff;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+.result-box p {
+  margin: 0;
+}
+
+.fas.fa-clock {
+  color: #409eff;
+  margin-right: 5px;
+}
+
 </style>
